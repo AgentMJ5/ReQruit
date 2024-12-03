@@ -1,5 +1,6 @@
-streamlit==1.25.0
+streamlit
 openai==0.28.0
-python-docx==0.8.11
-PyPDF2==3.0.0
-python-dotenv==1.0.0
+python-docx
+PyPDF2
+python-dotenv
+pillow==9.5.0
