@@ -1,9 +1,13 @@
 import openai
 from document_processing import load_documents
-from config import OPENAI_API_KEY
+from dotenv import load_dotenv
+import os
 
-# Set the OpenAI API key
-openai.api_key = OPENAI_API_KEY
+# Load the .env file
+load_dotenv()
+
+# Fetch and print variables
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Preload documents and generate embeddings
 documents = load_documents()

@@ -22,6 +22,12 @@ def load_documents(directory: str = "data/") -> List[str]:
     texts = []
     for file_name in os.listdir(directory):
         file_path = os.path.join(directory, file_name)
+        
+        # Ignore hidden files and `.ipynb_checkpoints`
+        if file_name.startswith(".") or ".ipynb_checkpoints" in file_name:
+            continue
+
+        # Process supported file formats
         if file_name.endswith(".docx"):
             texts.append(extract_text_from_docx(file_path))
         elif file_name.endswith(".pdf"):
@@ -29,3 +35,4 @@ def load_documents(directory: str = "data/") -> List[str]:
         else:
             print(f"Unsupported file format: {file_name}")
     return texts
+

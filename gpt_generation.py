@@ -1,11 +1,15 @@
 from openai import OpenAI
-from config import OPENAI_API_KEY
+import openai
+from dotenv import load_dotenv
+import os
+# Set the OpenAI API key
+# Fetch the API key from environment variables
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("OpenAI API key is not set. Ensure it's in the .env file or environment variables.")
 
 # Set the OpenAI API key
-client = OpenAI(
-    # defaults to os.environ.get("OPENAI_API_KEY")
-    api_key=OPENAI_API_KEY,
-)
+client = OpenAI(api_key=api_key)
 
 # Function to generate GPT response
 def generate_response(question: str, context: str) -> str:
@@ -22,7 +26,7 @@ def generate_response(question: str, context: str) -> str:
     try:
         # Construct the messages for Chat Completions
         messages = [
-            {"role": "system", "content": "You are a highly detailed and thorough assistant. Always provide complete and coherent answers to questions. Always end with a (.) after an alphabet "},
+            {"role": "system", "content": "You are a professional assistant designed to answer questions strictly as me(user) based on my resume. Only provide answers from the given context and avoid answering anything unrelated to the resume."},
             {"role": "user", "content": f"Context: {context}\n\nQuestion: {question}"}
         ]
         
@@ -37,7 +41,7 @@ def generate_response(question: str, context: str) -> str:
 
         # Extract and return the response text
         generated_text = response.choices[0].message.content.strip()
-
+            
         if not generated_text.endswith((".", "?", "!", "\n")):
             follow_up_prompt = f"{generated_text} Can you continue the explanation?"
             follow_up_response = client.chat.completions.create(
