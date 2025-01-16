@@ -1,7 +1,7 @@
 streamlit
-openai==0.28.0
+openai>=1.0.0  # Updated to the latest OpenAI library
 python-docx
 PyPDF2
 python-dotenv
-pillow==9.5.0
+pillow>=9.5.0  # Allows flexibility for patch updates
 pip
